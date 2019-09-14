@@ -47,7 +47,7 @@
 		var content = 
 			'<div class="fmp_content">'+
 				'<div class="fmp_body">'+
-					data.property_box
+					data.property_box +
 				'</div>'+
 			'</div>'+
 			'';
