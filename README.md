@@ -8,6 +8,11 @@
 </ul>
 <h2 id="item-description__changelog">Changelog</h2>
 
+
+= 2.3 - 16 December 2019 =
+
+* Bug Fixed: Number field as rang slider on search shortocde
+
 = 2.2 - 18 April 2019 =
 
 * Feature Added: Custom loading image, using loading_url attribute to the path to a .gif file

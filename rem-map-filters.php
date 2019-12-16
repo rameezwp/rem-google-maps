@@ -3,7 +3,7 @@
  * Plugin Name: Map Filters - Real Estate Manager Extension
  * Plugin URI: https://webcodingplace.com/real-estate-manager-wordpress-plugin/
  * Description: Search on Map filters for Real Estate Manager
- * Version: 2.2
+ * Version: 2.3
  * Author: WebCodingPlace
  * Author URI: https://webcodingplace.com/
  * License: GPLv2 or later

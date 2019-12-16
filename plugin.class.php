@@ -177,8 +177,13 @@ class REM_Map_Filters
 				<input class="form-control" type="text" placeholder="<?php echo $field['title']; ?>" name="<?php echo $field['key']; ?>" id="<?php echo $field['key']; ?>" value="<?php echo (isset($_GET[$field['key']])) ? esc_attr( $_GET[$field['key']] ) : '' ; ?>"/>
 			<?php }		
 		} elseif ($field['key'] == '') { ?>
-			
-		<?php } else {
+				
+		<?php } elseif ($field['type'] == 'number' && $field['range_slider'] == 'true') {
+	        $post_numbers_values = rem_number_field_values_in_posts($field['key']);
+	        $default_min_value = isset($post_numbers_values['min']) && $post_numbers_values['min'] != '' ? $post_numbers_values['min'] : 0;
+	        $default_max_value = isset($post_numbers_values['max']) && $post_numbers_values['max'] != '' ? $post_numbers_values['max'] : 9999;
+	        rem_render_range_field($field,$default_min_value, $default_max_value );
+	    } else {
 			if ($field['type'] == 'select') { 
 				if (class_exists('REM_CONDITIONAL_FIELDS')) {
 					$existing_options = rem_conditional_start()->values_in_posts();
