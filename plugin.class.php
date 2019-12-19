@@ -182,6 +182,7 @@ class REM_Map_Filters
 	        $post_numbers_values = rem_number_field_values_in_posts($field['key']);
 	        $default_min_value = isset($post_numbers_values['min']) && $post_numbers_values['min'] != '' ? $post_numbers_values['min'] : 0;
 	        $default_max_value = isset($post_numbers_values['max']) && $post_numbers_values['max'] != '' ? $post_numbers_values['max'] : 9999;
+	        $default_max_value = $default_max_value == $default_min_value ? 9999999 : $default_max_value;
 	        rem_render_range_field($field,$default_min_value, $default_max_value );
 	    } else {
 			if ($field['type'] == 'select') { 
