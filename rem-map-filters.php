@@ -22,4 +22,10 @@ if( class_exists('REM_Map_Filters')){
     $rem_filterable_grid = new REM_Map_Filters;
 }
 
+require_once( 'inc/update.php' );
+if ( is_admin() ) {
+    new REM_G_MAPS_PLUGIN_UPDATER( __FILE__, 'rameezwp', "rem-google-maps" );
+}
+
+
 ?>
