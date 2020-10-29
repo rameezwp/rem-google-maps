@@ -604,3 +604,9 @@ div[id^="filter-map-style"] .form-control {
 #filter-map-style-4 #map-canvas {
     margin-bottom: 20px;
 }
+.hide-filter {
+	display: none;
+}
+#rem-filter-map-google .more-button {
+	width: 100%;
+}

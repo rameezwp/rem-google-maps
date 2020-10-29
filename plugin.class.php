@@ -32,6 +32,8 @@ class REM_Map_Filters
 			'fields_to_show' => 'property_address,search,property_type,property_country,property_purpose,property_price',
 			'columns' => '6',
 			'search_btn_text' => __( 'Search', 'real-estate-manager' ),
+			'filters_btn_text' => __( 'Filter', 'real-estate-manager' ),
+			'more_filters_column_class' => 'col-xs-6 col-sm-4 col-md-3',
 			'fixed_fields' => '',
 			'disable_eq_height' => '',
 			'agent_id' => '',
@@ -48,7 +50,9 @@ class REM_Map_Filters
         rem_load_basic_styles();
         wp_enqueue_style( 'rem-archive-property-css', REM_URL . '/assets/front/css/archive-property.css' );
 
-
+        wp_enqueue_style( 'rem-labelauty-css', REM_URL . '/assets/front/lib/labelauty.css' );
+        wp_enqueue_script( 'rem-labelauty', REM_URL . '/assets/front/lib/labelauty.min.js', array('jquery'));
+  
 		wp_enqueue_style( 'rem-nouislider-css', REM_URL . '/assets/front/lib/nouislider.min.css' );
 		wp_enqueue_script( 'rem-nouislider-drop', REM_URL . '/assets/front/lib/nouislider.all.min.js', array('jquery'));
 		wp_enqueue_script( 'rem-match-height', REM_URL . '/assets/front/lib/jquery.matchheight-min.js', array('jquery'));

@@ -7,6 +7,8 @@ if (is_array($fields_to_show)) {
 } else {
 	$fields_arr =  explode(',', $fields_to_show );
 }
+
+$property_individual_cbs = $rem_ob->get_all_property_features();
 ?>
 
 <div class="ich-settings-main-wrap" id="rem-filter-map-google">
@@ -60,11 +62,27 @@ if (is_array($fields_to_show)) {
 					<?php rem_render_price_range_field('shortcode'); ?>
 				</div>
 			<?php } ?>
-
+			<div class="filter hide-filter field-margin col-sm-12">
+				<?php foreach ($property_individual_cbs as $cb) { ?>
+						<div class="<?php echo $more_filters_column_class; ?>">
+							<?php
+								$cb = stripcslashes($cb);
+								$translated_text = (function_exists('pll__')) ? pll__($cb) : __( $cb, 'real-estate-manager' );
+							?>
+							<input class="labelauty" type="checkbox" name="detail_cbs[<?php echo $cb; ?>]" data-labelauty="<?php echo $translated_text; ?>">
+						</div>
+				<?php } ?>
+			</div>
+			<div class="p-slide-wrap col-sm-6 col-md-<?php echo $columns ?> field-margin">
+			<?php if ($filters_btn_text != '') { ?>
+				<button type="button" class="btn btn-default more-button">
+					<?php echo $filters_btn_text; ?>
+				</button>
+			<?php } ?>
+			</div>
 			<div class="p-slide-wrap col-sm-6 col-md-<?php echo $columns ?> field-margin">
 				<input type="submit" value="<?php echo $search_btn_text; ?>" class="btn btn-block btn-default">
 			</div>
-
 		</div>
 	</form>
 </div>

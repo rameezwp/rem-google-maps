@@ -23,4 +23,14 @@ jQuery(document).ready(function($){
 	});
 	
 	$('.wcp-eq-height > div').matchHeight({byRow: false});
+
+	if (jQuery('.labelauty-unchecked-image').length == 0) {
+		jQuery(".labelauty").labelauty();
+	}
+	var $filter = jQuery('.filter', '#rem-filter-map-google');
+	jQuery(".more-button", '#rem-filter-map-google').on('click', function(){
+		$filter.toggleClass('hide-filter');
+		return false;
+	});
+
 });
