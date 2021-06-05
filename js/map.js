@@ -2,7 +2,7 @@ jQuery(document).ready(function($) {
 	var maps_attrs = {
 		searchForm: '.map-filter-form',
 		startAddress: rem_maps_data.address,
-		allowRadiusSearch: false,
+		allowRadiusSearch: true,
 		mapOptions:  {
 			zoom: parseInt(rem_maps_data.zoom),
 			styles: (rem_maps_data.map_styles != '') ? JSON.parse(rem_maps_data.map_styles) : undefined,

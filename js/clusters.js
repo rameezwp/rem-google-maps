@@ -45,8 +45,8 @@
 		
 		/* wrap it all in content */
 		var content = 
-			'<div class="fmp_content">'+
-				'<div class="fmp_body">'+
+			'<div class="rem_map_content">'+
+				'<div class="rem_map_body">'+
 					data.property_box +
 				'</div>'+
 			'</div>'+
@@ -190,14 +190,13 @@
 		/* this is used to check when the last marker is set */
 		var responseCounter = 0;
 		var results = responseData.results;
-		// console.log(responseData);
 		if ($('.property-search-results').length > 0) {
 			$('.property-search-results').html(responseData.properties);
-		// console.log(responseData.properties);
 		}
 		
 		if( results.length === 0 ){
 			finishResponse();
+			$('.rem-map-no-results').show().delay(5000).fadeOut();;
 		}
 		else{
 			var geocoder = new google.maps.Geocoder();
@@ -312,45 +311,33 @@
 			radiusMarker = undefined;
 			radiusCircle = undefined;
 			
-			$('.fmp_search_radius').remove();
+			$('#rem_radius_value').val('');
 		}
 	}
 	
-	/* append these fields to search form if distnace from selected marker is calculated on the server side */
-	function searchRadiusForm(){
-		$(options.searchForm).append(
-			'<div class="fmp_search_radius">'+
-				'<input type="hidden" class="fmp_search_radius" name="radius" value="">'+
-				'<input type="hidden" class="fmp_search_latitude" name="latitude" value="">'+
-				'<input type="hidden" class="fmp_search_longitude" name="longitude" value="">'+
-			'</div>');
-	}
 	/* update coordinates of marker on dragend or on new marker placemnet. These coordinates are used only if the search is on the server side */
 	function updateSearchFormLatLng( latlng ){
-		$('.fmp_search_latitude').val( latlng.lat() );
-		$('.fmp_search_longitude').val( latlng.lng() );	
+		$('.rem_search_latitude').val( latlng.lat() );
+		$('.rem_search_longitude').val( latlng.lng() );	
 	}
 
 	/* update radius of marker on resize or on new marker placemenet. Value is used only if the search is on the server side */
 	function updateSearchFormRadius(){
-		$('.fmp_search_radius').val( radiusCircle.getRadius() );	
+		if ($('#rem_radius_unit').val() == 'mi') {
+			var radius = radiusCircle.getRadius() / 1609.344;
+		}
+		if ($('#rem_radius_unit').val() == 'km') {
+			var radius = radiusCircle.getRadius() / 1000;
+		}
+		$('#rem_radius_value').val( radius );
+		map.fitBounds(radiusCircle.getBounds());
 	}
-	
-	
-	/* convert to selected unit and place into radius input box */
-	function setRadiusInput(){
-		var val = options.radiusOptions.radius * options.radiusUnits[$('#fmp_radius_unit').val()].multiplier;
-		$('#fmp_radius_value').val( val.toFixed( options.radiusDecimal ) );	
-	}
-
 
 	
 	/* prepare for raius search */
 	function prepareRadiusSearch( latlng ){
 		/* clear previous radiusMarker */
 		removeRadiusMarker();
-		
-		searchRadiusForm(); 		
 				
 		/* create marker that will be used as center for radius */
 		var markerOptions = {};
@@ -384,7 +371,6 @@
 		google.maps.event.addListener( radiusCircle, 'radius_changed', function() {
 			options.radiusOptions.radius = radiusCircle.getRadius();
 			updateSearchFormRadius();
-			setRadiusInput();
 			
 			/* CUSTOM EVENT */
 			if( options.onRadiusChange !== undefined ){
@@ -395,8 +381,7 @@
 		
 		/* bind on radiusMarker click to remove it */
 		google.maps.event.addListener( radiusMarker, 'click', function() {
-			$('#fmp_radius').slideUp( 250 );
-			$('#fmp_search_addresses').val('');
+			$('#rem_search_addresses').val('');
 			removeRadiusMarker();
 			
 			/* CUSTOM EVENT */
@@ -413,39 +398,22 @@
 				options.onRadiusMarkerMove( radiusMarker, radiusCircle, latlng.lat(), latlng.lng() );
 			}
 		});
-
-		/* show radius options */
-		$('#fmp_radius').slideDown( 250 );
 		
 		/* update hidden forms */
 		updateSearchFormLatLng( latlng );
 		updateSearchFormRadius();
-		/* update radius inputbox */
-		setRadiusInput();
 	}
 	
 	function radiusSearchPrepare(){
-		/* create select box from available radius units  */
-		var selectUnits = '<select id="fmp_radius_unit">';
-		for( var unit in options.radiusUnits ){
-			selectUnits += '<option value="'+unit+'">'+options.radiusUnits[unit].label+'</option>';
-		}
-		selectUnits += '</select>';
-		/* create radius options and append to the map */
-		$(mapContainer).append('<div id="fmp_radius">'+
-			'<span class="title">'+options.language.radius+'</span><input type="text" id="fmp_radius_value" value="'+options.radiusOptions.radius+'">'+
-			selectUnits	+
-			'<input type="text" id="fmp_search_addresses" placeholder="'+options.language.search+'">'+
-		'</div>');		
 		map.controls[google.maps.ControlPosition[options.radiusOptionsPos]].push(document.getElementById('fmp_radius'));
 		
-		/* append search box */
-		var searchBox = new google.maps.places.SearchBox(document.getElementById('fmp_search_addresses'));
+		var searchBox = new google.maps.places.SearchBox(document.getElementById('rem_search_addresses'));
 		/* listen for location select and append marker to the first place*/
 		google.maps.event.addListener(searchBox, 'places_changed', function() {
 			var places = searchBox.getPlaces();
 			if( places[0] ){
 				prepareRadiusSearch( places[0].geometry.location );
+				map.setCenter( places[0].geometry.location );
 			}
 			
 			/* CUSTOM EVENT */
@@ -465,8 +433,14 @@
 		});
 		
 		/* on input change update radius */
-		$(document).on( 'change', '#fmp_radius_value', function(event){
-			var radius = $(this).val() / options.radiusUnits[$('#fmp_radius_unit').val()].multiplier;
+		$(document).on( 'change', '#rem_radius_value, #rem_radius_unit', function(event){
+			var radius = parseInt($('#rem_radius_value').val());
+			if ($('#rem_radius_unit').val() == 'mi') {
+				radius = radius * 1609.344;
+			}
+			if ($('#rem_radius_unit').val() == 'km') {
+				radius = radius * 1000;
+			}
 			if( !isNaN( radius ) ){
 				options.radiusOptions.radius = radius;
 				radiusCircle.setRadius( radius );
@@ -476,10 +450,6 @@
 			}
 		});
 		
-		/* on unit change update valu in radius input box */
-		$(document).on( 'change', '#fmp_radius_unit', function(){			
-			setRadiusInput();
-		});
 	}
 	
 	/*show map*/
@@ -514,6 +484,7 @@
 		/* append overlays and radius update box */
 		$(mapContainer).append(
 			'<div class="fmp_overlay"></div>'+
+			'<div class="rem-map-no-results alert alert-info">No Results Found!</div>'+
 			'<div class="fmp_imageover"></div>'+
 			'<div id="fmp_search_results">'+
 				'<div id="fmp_pagination"></div>'+
@@ -768,20 +739,6 @@
 			boxOutSpeed: 250,
 			closeInClose: 250,
 			closeOutSpeed: 250
-		},
-		radiusUnits: {
-			"Mi": {
-				label: "miles",
-				multiplier: 6.2137273664980675307890191009979e-4
-			},
-			"km": {
-				label: "kilometers",
-				multiplier: 0.001
-			},
-			"m": {
-				label: "meters",
-				multiplier: 1
-			}
 		},
 		radiusOptions: {
 			radius: 1500,

@@ -3,6 +3,7 @@
 function rem_search_properties_on_map($query_args, $icons_data, $icons_by_meta){
 	
 	$result = array();
+
 	$property_query = new WP_Query( $query_args );
 	global $rem_sc_ob;
 	if( $property_query->have_posts() ){

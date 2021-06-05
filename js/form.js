@@ -21,8 +21,7 @@ jQuery(document).ready(function($){
 		$(this).find('.price-range').Link('upper').to( $(this).find('#price-value-max') );
 		$(this).find('.price-range').Link('upper').to( $(this).find('#max-value') );
 	});
-	
-	$('.wcp-eq-height > div').matchHeight({byRow: false});
+
 
 	if (jQuery('.labelauty-unchecked-image').length == 0) {
 		jQuery(".labelauty").labelauty();

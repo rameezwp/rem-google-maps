@@ -30,9 +30,28 @@ $property_individual_cbs = $rem_ob->get_all_property_features();
 		<input type="hidden" name="icons_data" value='<?php echo stripcslashes(json_encode($map_icons)); ?>'>
 		<div class="row <?php echo ($disable_eq_height != 'yes') ? 'wcp-eq-height' : '' ; ?>">
 			
+			<?php if ($radius_search == 'enable') { ?>
+				<div class="col-sm-6 col-md-<?php echo $columns; ?> field-margin">
+					<input class="form-control pac-target-input" autocomplete="off" type="text" id="rem_search_addresses" placeholder="<?php _e( 'Location', 'rem-map-filters' ); ?>" />
+				</div>
+				<div class="col-sm-6 col-md-<?php echo $columns; ?> field-margin">
+					<input class="form-control" name="radius" type="number" min="0" id="rem_radius_value" placeholder="<?php _e( 'Radius', 'rem-map-filters' ); ?>" />
+				</div>
+				<div class="col-sm-6 col-md-<?php echo $columns; ?> field-margin">
+					<select id="rem_radius_unit" name="radius_unit" class="form-control">
+						<option value="mi"><?php _e( 'Miles', 'rem-map-filters' ); ?></option>
+						<option value="km"><?php _e( 'kilometers', 'rem-map-filters' ); ?></option>
+					</select>
+				</div>
+				<div class="rem_current_position">
+					<input type="hidden" class="rem_search_latitude" name="latitude" value="">
+					<input type="hidden" class="rem_search_longitude" name="longitude" value="">
+				</div>
+			<?php } ?>
+
 			<?php if (in_array('search', $fields_arr)) { ?>
 				<div class="col-sm-6 col-md-<?php echo $columns; ?> field-margin">
-					<input class="form-control" type="text" name="search_property" id="keywords" placeholder="<?php _e( 'Keywords', 'real-estate-manager' ); ?>" />
+					<input class="form-control" type="text" name="search_property" id="keywords" placeholder="<?php _e( 'Keywords', 'rem-map-filters' ); ?>" />
 				</div>
 			<?php } else {
 				echo '<input value="" type="hidden" name="search_property" />';
@@ -67,7 +86,7 @@ $property_individual_cbs = $rem_ob->get_all_property_features();
 						<div class="<?php echo $more_filters_column_class; ?>">
 							<?php
 								$cb = stripcslashes($cb);
-								$translated_text = (function_exists('pll__')) ? pll__($cb) : __( $cb, 'real-estate-manager' );
+								$translated_text = (function_exists('pll__')) ? pll__($cb) : __( $cb, 'rem-map-filters' );
 							?>
 							<input class="labelauty" type="checkbox" name="detail_cbs[<?php echo $cb; ?>]" data-labelauty="<?php echo $translated_text; ?>">
 						</div>

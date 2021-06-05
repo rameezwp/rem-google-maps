@@ -1,19 +1,20 @@
 <?php
 /**
- * Plugin Name: Map Filters - Real Estate Manager Extension
- * Plugin URI: https://webcodingplace.com/real-estate-manager-wordpress-plugin/
- * Description: Search on Map filters for Real Estate Manager
- * Version: 2.3
+ * Plugin Name: REM - Map Filters and Radius Search
+ * Plugin URI: https://webcodingplace.com/google-map-filters-real-estate-manager/
+ * Description: Search on Map with Radius and other filters
+ * Version: 3.0
  * Author: WebCodingPlace
  * Author URI: https://webcodingplace.com/
  * License: GPLv2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain: wcp-rem
+ * Text Domain: rem-map-filters
  * Domain Path: /languages
  */
 
 require_once('plugin.class.php');
 require_once('inc/find.php');
+require_once('inc/geo-query.php');
 
 /**
  * Iniliatizing main class object for setting up import/export
@@ -22,10 +23,13 @@ if( class_exists('REM_Map_Filters')){
     $rem_filterable_grid = new REM_Map_Filters;
 }
 
-require_once( 'inc/update.php' );
-if ( is_admin() ) {
-    new REM_G_MAPS_PLUGIN_UPDATER( __FILE__, 'rameezwp', "rem-google-maps" );
+if (defined('REM_PATH')) {
+	require_once REM_PATH.'/inc/update/wp-package-updater/class-wp-package-updater.php';
+	$cfields_updater = new WP_Package_Updater(
+		'https://kb.webcodingplace.com/',
+		wp_normalize_path( __FILE__ ),
+		wp_normalize_path( plugin_dir_path( __FILE__ ) )
+	);
 }
-
 
 ?>

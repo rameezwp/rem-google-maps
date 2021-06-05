@@ -20,19 +20,18 @@ class REM_Map_Filters
 	function check_if_rem_activated() {
 		if (!class_exists('WCP_Real_Estate_Management')) { ?>
 		    <div class="notice notice-info is-dismissible">
-		        <p>Please install and activate <a target="_blank" href="https://wordpress.org/plugins/real-estate-manager/">Real Estate Manager</a> for using <strong>Google Map Filters</strong></p>
+		        <p>Please install and activate <a target="_blank" href="https://webcodingplace.com/real-estate-manager-wordpress-plugin/">Real Estate Manager</a> for using <strong>Google Map Filters</strong></p>
 		    </div>
 		<?php }
 	}
 
 	function render_search_form($attrs){
-		// $default_icon = rem_get_option('maps_property_image', REM_URL . '/assets/images/maps/cottage-pin.png');
-		// $default_icon_h = rem_get_option('maps_property_image_hover', REM_URL . '/assets/images/maps/cottage-hover-pin.png');		
 		extract( shortcode_atts( array(
 			'fields_to_show' => 'property_address,search,property_type,property_country,property_purpose,property_price',
 			'columns' => '6',
+			'radius_search' => 'enable',
 			'search_btn_text' => __( 'Search', 'real-estate-manager' ),
-			'filters_btn_text' => __( 'Filter', 'real-estate-manager' ),
+			'filters_btn_text' => __( 'Filters', 'real-estate-manager' ),
 			'more_filters_column_class' => 'col-xs-6 col-sm-4 col-md-3',
 			'fixed_fields' => '',
 			'disable_eq_height' => '',
@@ -109,7 +108,6 @@ class REM_Map_Filters
 		} else {
 		    wp_enqueue_script( 'rem-google-maps', 'http://maps.googleapis.com/maps/api/js?key='.$maps_api.'&libraries=places' );
 		}
-		    // wp_enqueue_script( 'rem-google-maps', 'https://maps.googleapis.com/maps/api/js?libraries=places&amp;sensor=false' );
 
 		wp_enqueue_script( 'rem-infobox-js', plugin_dir_url( __FILE__ ).'js/infobox.min.js', array('jquery') );
 		wp_enqueue_script( 'rem-oms-js', plugin_dir_url( __FILE__ ).'js/oms.min.js', array('jquery') );
@@ -227,6 +225,18 @@ class REM_Map_Filters
 
 		$icons_data = json_decode(stripcslashes($_REQUEST['icons_data']), true);
 		$icons_by_meta = $_REQUEST['icons_by_meta'];
+		if (isset($_REQUEST['radius']) && $_REQUEST['radius'] != '') {
+		    $args['geo_query'] = array(
+		        'lat_field' => 'rem_property_latitude',
+		        'lng_field' => 'rem_property_longitude',
+		        'latitude'  => $_REQUEST['latitude'],
+		        'longitude' => $_REQUEST['longitude'],
+		        'distance'  => $_REQUEST['radius'],
+		        'units'     => $_REQUEST['radius_unit']
+		    );
+		    $args['orderby'] = 'distance';
+		    $args['order'] = 'ASC';
+		}
 		$res = rem_search_properties_on_map($args, $icons_data, $icons_by_meta);	
 		$properties = rem_search_properties_off_map($args);	
 
