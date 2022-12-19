@@ -673,7 +673,7 @@
 			var url = $(options.searchForm).attr("action");
 			searchData( url );
 		});
-		$(window).load(function() {
+		$(window).on('load', function() {
 			var url = $(options.searchForm).attr("action");
 			searchData( url );
 		});

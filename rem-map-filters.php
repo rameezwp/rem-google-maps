@@ -1,9 +1,9 @@
 <?php
 /**
  * Plugin Name: REM - Map Filters and Radius Search
- * Plugin URI: https://webcodingplace.com/google-map-filters-real-estate-manager/
+ * Plugin URI: https://wp-rem.com/addons/rem-google-map-filters/
  * Description: Search on Map with Radius and other filters
- * Version: 3.0
+ * Version: 3.1
  * Author: WebCodingPlace
  * Author URI: https://webcodingplace.com/
  * License: GPLv2 or later
