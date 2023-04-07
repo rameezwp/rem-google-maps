@@ -20,7 +20,7 @@ class REM_Map_Filters
 	function check_if_rem_activated() {
 		if (!class_exists('WCP_Real_Estate_Management')) { ?>
 		    <div class="notice notice-info is-dismissible">
-		        <p>Please install and activate <a target="_blank" href="https://webcodingplace.com/real-estate-manager-wordpress-plugin/">Real Estate Manager</a> for using <strong>Google Map Filters</strong></p>
+		        <p>Please install and activate <a target="_blank" href="https://wp-rem.com">Real Estate Manager</a> for using <strong>Google Map Filters</strong></p>
 		    </div>
 		<?php }
 	}
@@ -259,6 +259,7 @@ class REM_Map_Filters
 			'reset_btn_text' => '',
 			'fixed_fields' => '',
 			'disable_eq_height' => '',
+			'filters_btn_text' => '',
 			'agent_id' => '',
 			'fields_margin' => '0 0 10px 0',
 			'icons_by_meta'	=> '',

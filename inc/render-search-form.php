@@ -92,13 +92,13 @@ $property_individual_cbs = $rem_ob->get_all_property_features();
 						</div>
 				<?php } ?>
 			</div>
-			<div class="p-slide-wrap col-sm-6 col-md-<?php echo $columns ?> field-margin">
 			<?php if ($filters_btn_text != '') { ?>
-				<button type="button" class="btn btn-default more-button">
-					<?php echo $filters_btn_text; ?>
-				</button>
+				<div class="p-slide-wrap col-sm-6 col-md-<?php echo $columns ?> field-margin">
+					<button type="button" class="btn btn-default more-button">
+						<?php echo $filters_btn_text; ?>
+					</button>
+				</div>
 			<?php } ?>
-			</div>
 			<div class="p-slide-wrap col-sm-6 col-md-<?php echo $columns ?> field-margin">
 				<input type="submit" value="<?php echo $search_btn_text; ?>" class="btn btn-block btn-default">
 			</div>

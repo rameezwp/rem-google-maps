@@ -472,7 +472,11 @@
 			    url: icon_url,
 			  });
 		  }
-		});				
+		});
+
+		// Add event listeners for when the map has changed: drag, zoom in/out or page refreshed.
+		google.maps.event.addListener(map, 'dragend', function() {updateListingsAsPerViewPort()});
+		google.maps.event.addListener(map, 'idle', function() {updateListingsAsPerViewPort()});			
 
 		google.maps.event.addListenerOnce(map, 'tilesloaded', function(){
 			/* CUSTOM EVENT */
@@ -533,6 +537,12 @@
 			infoWindow.open( map, marker );
 			if( options.markVisited ){
 				marker.icon = marker.visitedIcon;
+			}
+
+			// Bring listing on top
+			if(marker.uniqueID){
+				var listing = $('.property-search-results #property-'+marker.uniqueID);
+				$('.property-search-results .row').prepend(listing);
 			}
 			
 			/* CUSTOM EVENT */
@@ -609,7 +619,21 @@
 			});	
 		}	
 	}
-	
+
+	// Create a function to add markers to the map. 
+	function updateListingsAsPerViewPort() {
+		if(contentData.length){
+			$('.property-search-results > .row > div').hide();
+			for(var i = contentData.length, bounds = map.getBounds(); i--;) {
+			    if( bounds.contains(contentData[i].getPosition()) ){
+			 		if(contentData[i].uniqueID){
+			 			$('.property-search-results #property-'+contentData[i].uniqueID).show();
+			 		}
+			    }
+			}
+		}
+	}
+
 	function displayResponseError( textStatus, errorThrown ){
 		var message;
 		switch( textStatus ){
