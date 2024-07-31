@@ -196,7 +196,7 @@
 		
 		if( results.length === 0 ){
 			finishResponse();
-			$('.rem-map-no-results').show().delay(5000).fadeOut();;
+			$('.rem-map-no-results').show().delay(5000).fadeOut();
 		}
 		else{
 			var geocoder = new google.maps.Geocoder();
@@ -217,7 +217,16 @@
 				}
 			 // console.log({lat: parseFloat(results[i].latitude), lng: parseFloat(results[i].longitude)});
 			}
-			map.fitBounds(bounds);
+
+	        if (results.length === 1) {
+	            // Set custom zoom level for a single result
+	            var singleLatLng = new google.maps.LatLng(parseFloat(results[0].latitude), parseFloat(results[0].longitude));
+	            map.setCenter(singleLatLng);
+	            map.setZoom(rem_maps_data.single_result_zoom);
+	        } else {
+	            map.fitBounds(bounds);
+	        }
+
 			for( var i=0; i<results.length; i++){
 				(function( object, id ) {
 					/* make this asyncronuous becaue of the number of markers */

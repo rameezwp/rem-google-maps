@@ -30,6 +30,7 @@ $fields_to_show = ($fields_to_show != '') ? $fields_to_show : 'property_type,pro
 			lat='".$lat."'
 			long='".$long."'
 			zoom='".$zoom."'
+			single_result_zoom='".$single_result_zoom."'
 			map_height='".$map_height."'
 			address='".$address."']" ); ?>
 		</div>

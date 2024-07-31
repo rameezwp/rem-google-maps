@@ -94,6 +94,7 @@ class REM_Map_Filters
 			'lat' => '',
 			'long' => '',
 			'zoom' => '5',
+			'single_result_zoom' => '14',
 			'map_styles' => stripcslashes(rem_get_option('maps_styles')),
 			'map_height' => '500px',
 			'map_type' => rem_get_option( 'maps_type', 'roadmap'),
@@ -121,6 +122,7 @@ class REM_Map_Filters
             'long'         => $long,
             'map_styles'         => $map_styles,
             'map_type' => $map_type,
+            'single_result_zoom' => $single_result_zoom,
         );
 
 		wp_enqueue_script( 'rem-map-area', plugin_dir_url( __FILE__ ).'js/map.js', array('jquery') );
@@ -275,6 +277,7 @@ class REM_Map_Filters
 			'lat' => '',
 			'long' => '',
 			'zoom' => '5',
+			'single_result_zoom' => '14',
 			'map_styles' => '',
 			'map_height' => '500px',
 			'loader_url' => '',

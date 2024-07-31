@@ -26,6 +26,7 @@ $fields_to_show = ($fields_to_show != '') ? $fields_to_show : 'property_address,
 			lat='".$lat."'
 			long='".$long."'
 			zoom='".$zoom."'
+			single_result_zoom='".$single_result_zoom."'
 			map_height='369px'
 			address='".$address."']" ); ?>
 		</div>
