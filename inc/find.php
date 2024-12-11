@@ -68,7 +68,7 @@ function rem_search_properties_off_map($query_args){
         <br>
         <div class="alert with-icon alert-info" role="alert">
             <i class="icon fa fa-info"></i>
-            <span style="margin-top: 12px;margin-left: 10px;"><?php echo rem_get_option('no_results_msg', 'Sorry! No Properties Found. Try Searching Again.') ?></span>
+            <span style="margin-top: 12px;margin-left: 10px;"><?php $msg = rem_get_option('no_results_msg', __( 'Sorry! No Properties Found. Try Searching Again.', 'real-estate-manager' )); echo apply_filters( 'no_results_msg',  stripcslashes($msg)); ?></span>
         </div>
     <?php endif;
     return ob_get_clean();

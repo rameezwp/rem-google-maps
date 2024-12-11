@@ -1,25 +1,39 @@
 jQuery(document).ready(function($){
-	$('#rem-filter-map-google .p-slide-wrap').each(function(index, el) {
-		$(this).find('.price-range').noUiSlider({
-			start: [ parseInt(rem_map_form_data.price_min_default), parseInt(rem_map_form_data.price_max_default) ],
-			behaviour: 'drag',
-			step: parseInt(rem_map_form_data.price_step),
-			connect: true,
-			range: {
-				'min': parseInt(rem_map_form_data.price_min),
-				'max': parseInt(rem_map_form_data.price_max)
-			},
-			format: wNumb({
-				decimals: parseInt(rem_map_form_data.decimal_points),
-				mark: rem_map_form_data.decimal_separator,
-				thousand: rem_map_form_data.thousand_separator,
-			}),
+	$('#rem-filter-map-google .price-range').each(function(index, element) {
+		var formatter = wNumb({
+		    decimals: parseInt(rem_map_form_data.decimal_points),
+		    mark: rem_map_form_data.decimal_separator,
+		    thousand: rem_map_form_data.thousand_separator,
 		});
 
-		$(this).find('.price-range').Link('lower').to( $(this).find('#price-value-min') );
-		$(this).find('.price-range').Link('lower').to( $(this).find('#min-value') );
-		$(this).find('.price-range').Link('upper').to( $(this).find('#price-value-max') );
-		$(this).find('.price-range').Link('upper').to( $(this).find('#max-value') );
+		noUiSlider.create(element, {
+			start: [ parseInt(rem_map_form_data.price_min_default), parseInt(rem_map_form_data.price_max_default) ],
+			behaviour: 'drag',
+			direction: rem_map_form_data.site_direction,
+			connect: true,
+			step: 1,
+			range: {
+			    'min': parseInt(rem_map_form_data.price_min),
+			    'max': parseInt(rem_map_form_data.price_max)
+			},
+			format: formatter,
+		});
+
+		var wrap = $(this).closest('.p-slide-wrap');
+        element.noUiSlider.on("update", function (values, handle) {
+            var minValue = wrap.find('#price-value-min');
+            var maxValue = wrap.find('#price-value-max');
+            var minInput = wrap.find('#min-value');
+            var maxInput = wrap.find('#max-value');
+            
+            if (handle === 0) {  // Handle for the lower slider
+                minValue.text(values[0]);
+                minInput.val(formatter.from(values[0]));
+            } else {  // Handle for the upper slider
+                maxValue.text(values[1]);
+                maxInput.val(formatter.from(values[1]));
+            }
+        });
 	});
 
 

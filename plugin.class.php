@@ -55,6 +55,9 @@ class REM_Map_Filters
 		wp_enqueue_style( 'rem-nouislider-css', REM_URL . '/assets/front/lib/nouislider.min.css' );
 		wp_enqueue_script( 'rem-nouislider-drop', REM_URL . '/assets/front/lib/nouislider.all.min.js', array('jquery'));
 		wp_enqueue_script( 'rem-match-height', REM_URL . '/assets/front/lib/jquery.matchheight-min.js', array('jquery'));
+
+		wp_enqueue_script( 'rem-wNumb', REM_URL . '/assets/front/lib/wNumb.min.js', array('jquery'));
+		
         $script_settings = array(
             'price_min'         => rem_get_option('minimum_price', '350'),
             'price_max'         => rem_get_option('maximum_price', '45000'), 
@@ -65,6 +68,7 @@ class REM_Map_Filters
             'thousand_separator'=> rem_get_option('thousand_separator', ''),
             'decimal_separator' => rem_get_option('decimal_separator', ''),
             'decimal_points'    => rem_get_option('decimal_points', '0'),
+            'site_direction'        => (is_rtl()) ? 'rtl' : 'ltr',
         );
 
 		wp_enqueue_script( 'rem-map-form', plugin_dir_url( __FILE__ ).'js/form.js', array('jquery') );

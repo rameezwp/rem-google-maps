@@ -706,10 +706,6 @@
 			var url = $(options.searchForm).attr("action");
 			searchData( url );
 		});
-		$(window).on('load', function() {
-			var url = $(options.searchForm).attr("action");
-			searchData( url );
-		});
 	}
 
 	/* response container */
@@ -841,7 +837,14 @@
 		startMap( false ); /* false - do not bind listeners */
 		
 		return this;
-	};	
+	};
+
+	$(window).on('load', function() {
+		setTimeout(function() {
+			var url = $(options.searchForm).attr("action");
+			searchData( url );			
+		}, 500);
+	});
 })(jQuery);
 
 function set_dynamic_bounds(lat, lon, bounds, map){

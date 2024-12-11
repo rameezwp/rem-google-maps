@@ -9,6 +9,7 @@ $fields_to_show = ($fields_to_show != '') ? $fields_to_show : 'property_type,pro
 			fields_to_show="'.$fields_to_show.'"
 			search_btn_text="'.$search_btn_text.'"
 			reset_btn_text="'.$reset_btn_text.'"
+			radius_search="'.$radius_search.'"
 			filters_btn_text="'.$filters_btn_text.'"
 			fixed_fields="'.$fixed_fields.'"
 			disable_eq_height="'.$disable_eq_height.'"
