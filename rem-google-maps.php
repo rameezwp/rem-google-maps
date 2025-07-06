@@ -3,7 +3,7 @@
  * Plugin Name: REM - Map Filters and Radius Search
  * Plugin URI: https://wp-rem.com/addons/rem-google-map-filters/
  * Description: Search on Map with Radius and other filters
- * Version: 4.0
+ * Version: 4.1
  * Author: WebCodingPlace
  * Author URI: https://webcodingplace.com/
  * License: GPLv2 or later
@@ -25,7 +25,7 @@ if( class_exists('REM_Map_Filters')){
 
 if (defined('REM_PATH')) {
 	require_once REM_PATH.'/inc/update/wp-package-updater/class-wp-package-updater.php';
-	$cfields_updater = new WP_Package_Updater(
+	$rem_g_map_updater = new WP_Package_Updater(
 		'https://kb.webcodingplace.com/',
 		wp_normalize_path( __FILE__ ),
 		wp_normalize_path( plugin_dir_path( __FILE__ ) )

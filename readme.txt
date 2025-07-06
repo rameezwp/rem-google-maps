@@ -3,7 +3,7 @@ Contributors: webcodingplace
 Tags: real estate, property, listings,  wp property, realty, real estate manager, properties, listing, wpml, property management system, wordpress real estate, real estate CMS, wp real estate, wp agent, German, Spanish, Russian, Arabic, Czech, Persian, Greek, Danish
 Requires at least: 3.5
 Tested up to: 6.1
-Stable tag: 4.0
+Stable tag: 4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,6 +13,9 @@ Search on Google Map with Radius and other options
 Search on Google Map with Radius and other options
 
 == Changelog ==
+
+= 4.1 – 06 July 2025 =
+- Bug Fixed: WordPress 6.7.0 Compatibility Issue
 
 = 4.0 – 11 December 2024 =
 - Feature Added: Compatiable with REM 12.5+
