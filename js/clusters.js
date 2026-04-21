@@ -219,6 +219,7 @@
 			}
 
 	        if (results.length === 1) {
+	        	console.log(results);
 	            // Set custom zoom level for a single result
 	            var singleLatLng = new google.maps.LatLng(parseFloat(results[0].latitude), parseFloat(results[0].longitude));
 	            map.setCenter(singleLatLng);
@@ -298,6 +299,7 @@
 						else{
 							failedObjects.push( object );
 						}
+
 						/* check if it is the end and show failed ones */
 						if( responseCounter == results.length - 1 ){
 							finishResponse();
@@ -305,6 +307,22 @@
 						else{
 							responseCounter++;
 						}
+
+						if (radiusCircle) {
+						    var radiusCenter = radiusCircle.getCenter();
+
+						    for (var i = 0; i < contentData.length; i++) {
+						        var markerPosition = contentData[i].getPosition();
+						        var distance = google.maps.geometry.spherical.computeDistanceBetween(radiusCenter, markerPosition);
+
+						        if (distance <= radiusCircle.getRadius()) {
+						            contentData[i].setVisible(true);
+						        } else {
+						            contentData[i].setVisible(false);
+						        }
+						    }
+						}
+
 					}, 40);
 				})( results[i], i);
 			}
@@ -594,6 +612,10 @@
 		if( bindListeners ){			
 			prepareListeners();
 		}
+		if( options.allowRadiusSearch ){
+			var specificLocation = new google.maps.LatLng(location.lat, location.lng);
+			prepareRadiusSearch(specificLocation);
+		}		
 	}
 	
 	/* calculate Latitude and Longitude for desired place */
@@ -716,6 +738,7 @@
 	var mapContainer;
 	/* global map */
 	var map;
+	var radiusCenter;
 	/* overlaping marker */
 	var oms;
 	/* array of objects {infoWindow: widow, marker: marker} */

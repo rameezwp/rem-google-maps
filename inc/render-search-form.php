@@ -35,11 +35,11 @@ $property_individual_cbs = $rem_ob->get_all_property_features();
 					<input class="form-control pac-target-input" autocomplete="off" type="text" id="rem_search_addresses" placeholder="<?php _e( 'Location', 'rem-map-filters' ); ?>" />
 				</div>
 				<div class="col-sm-6 col-md-<?php echo $columns; ?> field-margin">
-					<input class="form-control" name="radius" type="number" min="0" id="rem_radius_value" placeholder="<?php _e( 'Radius', 'rem-map-filters' ); ?>" />
+					<input class="form-control" name="radius" type="number" min="0" value="<?php echo isset($_GET['radius']) ? esc_attr( $_GET['radius'] ) : '10'; ?>" id="rem_radius_value" placeholder="<?php _e( 'Radius', 'rem-map-filters' ); ?>" />
 				</div>
 				<div class="col-sm-6 col-md-<?php echo $columns; ?> field-margin">
 					<select id="rem_radius_unit" name="radius_unit" class="form-control">
-						<option value="mi"><?php _e( 'Miles', 'rem-map-filters' ); ?></option>
+						<option value="mi" selected><?php _e( 'Miles', 'rem-map-filters' ); ?></option>
 						<option value="km"><?php _e( 'kilometers', 'rem-map-filters' ); ?></option>
 					</select>
 				</div>

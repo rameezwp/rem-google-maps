@@ -36,6 +36,11 @@ jQuery(document).ready(function($){
         });
 	});
 
+	if (typeof $('.gmf-select2-field').select2 === "function") { 
+		$('.gmf-select2-field').select2({placeholder: $(this).data('placeholder')});
+	    $('.select2-container').width('100%');
+	}
+
 
 	if (jQuery('.labelauty-unchecked-image').length == 0) {
 		jQuery(".labelauty").labelauty();

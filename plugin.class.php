@@ -56,6 +56,9 @@ class REM_Map_Filters
 		wp_enqueue_script( 'rem-nouislider-drop', REM_URL . '/assets/front/lib/nouislider.all.min.js', array('jquery'));
 		wp_enqueue_script( 'rem-match-height', REM_URL . '/assets/front/lib/jquery.matchheight-min.js', array('jquery'));
 
+		wp_enqueue_style( 'rem-select2-css', REM_URL . '/assets/admin/css/select2.min.css' );
+        wp_enqueue_script( 'rem-select2-js', REM_URL . '/assets/admin/js/select2.min.js' , array('jquery'));
+
 		wp_enqueue_script( 'rem-wNumb', REM_URL . '/assets/front/lib/wNumb.min.js', array('jquery'));
 		
         $script_settings = array(
@@ -95,14 +98,15 @@ class REM_Map_Filters
 	function render_map($attrs){
 		extract( shortcode_atts( array(
 			'address' => 'USA',
-			'lat' => '',
-			'long' => '',
+			'lat' => '38.7946',
+			'long' => '106.5348',
 			'zoom' => '5',
 			'single_result_zoom' => '14',
 			'map_styles' => stripcslashes(rem_get_option('maps_styles')),
 			'map_height' => '500px',
 			'map_type' => rem_get_option( 'maps_type', 'roadmap'),
 			'loader_url' => '',
+			'radius_search' => 'enable',
 		), $attrs ) );
 
 
@@ -122,8 +126,9 @@ class REM_Map_Filters
         $script_settings = array(
             'address'         => $address,
             'zoom'         => $zoom,
-            'lat'         => $lat,
-            'long'         => $long,
+            'radius_search'    => $radius_search,
+            'lat'         => isset($_GET['lat']) ? esc_attr($_GET['lat']) : $lat,
+            'long'         => isset($_GET['lng']) ? esc_attr($_GET['lng']) : $long,
             'map_styles'         => $map_styles,
             'map_type' => $map_type,
             'single_result_zoom' => $single_result_zoom,
@@ -216,6 +221,26 @@ class REM_Map_Filters
 									
 									echo '<option value="'.trim($title).'" '.$selected.'>'.$title.'</option>';
 								}
+							}
+						?>
+				</select>
+				<?php } elseif ($field['type'] == 'select2' || $field['type'] == 'checkboxes') {
+					$dashes = apply_filters( 'rem_search_dropdowns_dashes', '--' );
+					?>
+				<select multiple class="gmf-select2-field" name="<?php echo esc_attr($field['key']); ?>[]" id="<?php echo esc_attr($field['key']).esc_attr($display); ?>[]" data-placeholder="<?php echo esc_attr($dashes); ?> <?php echo rem_wpml_translate($field['title'], 'real-estate-manager-fields'); ?> <?php echo esc_attr($dashes); ?>">
+					<option value=""><?php echo esc_attr($dashes); ?> <?php echo rem_wpml_translate($field['title'], 'real-estate-manager-fields'); ?> <?php echo esc_attr($dashes); ?></option>
+						<?php
+							foreach ($field['options'] as $title) {
+								$title = stripcslashes($title);
+								$selected = '';
+								if(isset($_GET[$field['key']])){
+									if (is_array($_GET[$field['key']]) && in_array(trim($title), $_GET[$field['key']])) {
+										$selected = 'selected';
+									} elseif($_GET[$field['key']] == trim($title)) {
+										$selected = 'selected';
+									}
+								}
+								echo '<option value="'.trim(esc_attr($title)).'" '.esc_attr($selected).'>'.rem_wpml_translate($title, 'real-estate-manager-fields').'</option>';
 							}
 						?>
 				</select>
