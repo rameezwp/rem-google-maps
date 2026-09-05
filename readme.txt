@@ -3,7 +3,7 @@ Contributors: webcodingplace
 Tags: real estate, property, listings,  wp property, realty, real estate manager, properties, listing, wpml, property management system, wordpress real estate, real estate CMS, wp real estate, wp agent, German, Spanish, Russian, Arabic, Czech, Persian, Greek, Danish
 Requires at least: 3.5
 Tested up to: 6.9
-Stable tag: 4.2
+Stable tag: 4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,6 +13,9 @@ Search on Google Map with Radius and other options
 Search on Google Map with Radius and other options
 
 == Changelog ==
+
+= 4.3 – 05 September 2026 =
+- Feature Added: New "radius" and "radius_unit" attributes for the [rem_map_area] shortcode to set the default radius search value and unit
 
 = 4.2 – 21 April 2026 =
 - Feature Added: Support for Multi Select and Multi Checkboxes fields in search forms

@@ -107,6 +107,8 @@ class REM_Map_Filters
 			'map_type' => rem_get_option( 'maps_type', 'roadmap'),
 			'loader_url' => '',
 			'radius_search' => 'enable',
+			'radius' => '',
+			'radius_unit' => '',
 		), $attrs ) );
 
 
@@ -132,6 +134,8 @@ class REM_Map_Filters
             'map_styles'         => $map_styles,
             'map_type' => $map_type,
             'single_result_zoom' => $single_result_zoom,
+            'radius'         => $radius,
+            'radius_unit'    => $radius_unit,
         );
 
 		wp_enqueue_script( 'rem-map-area', plugin_dir_url( __FILE__ ).'js/map.js', array('jquery') );

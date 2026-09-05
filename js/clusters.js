@@ -717,9 +717,33 @@
 	}
 
 	
+	/* apply default radius / radius unit coming from the [rem_map_area] shortcode.
+	   Only overrides the built-in defaults when values are actually provided, so
+	   existing behaviour is preserved when the attributes are not set. */
+	function applyDefaultRadius(){
+		if( typeof rem_maps_data === 'undefined' ){
+			return;
+		}
+
+		/* reflect the configured unit on the search form dropdown, if present */
+		var configuredUnit = ( rem_maps_data.radius_unit == 'km' || rem_maps_data.radius_unit == 'mi' ) ? rem_maps_data.radius_unit : '';
+		if( configuredUnit != '' ){
+			$('#rem_radius_unit').val( configuredUnit );
+		}
+
+		/* set the default radius (converted to meters) used to draw the initial circle */
+		var radiusValue = parseFloat( rem_maps_data.radius );
+		if( !isNaN( radiusValue ) && radiusValue > 0 ){
+			/* fall back to the form's current unit (Miles by default) when no unit is configured */
+			var effectiveUnit = ( configuredUnit != '' ) ? configuredUnit : ( $('#rem_radius_unit').val() == 'km' ? 'km' : 'mi' );
+			options.radiusOptions.radius = ( effectiveUnit == 'km' ) ? radiusValue * 1000 : radiusValue * 1609.344;
+		}
+	}
+
 	/* fire it all up */
 	function initialize(){
 		$(mapContainer).addClass('fmp_responsive_map');
+		applyDefaultRadius();
 		startMap( true ); /* false - bind listeners */
 		
 		/* connect with the search form and wait for its submission */
